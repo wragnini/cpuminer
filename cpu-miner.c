@@ -123,6 +123,7 @@ bool have_stratum = false;
 bool use_syslog = false;
 static bool opt_background = false;
 static bool opt_quiet = false;
+bool opt_randomize = false;
 static int opt_retries = -1;
 static int opt_fail_pause = 30;
 int opt_timeout = 0;
@@ -185,6 +186,7 @@ Options:\n\
   -T, --timeout=N       timeout for long polling, in seconds (default: none)\n\
   -s, --scantime=N      upper bound on time spent scanning current work when\n\
                           long polling is unavailable, in seconds (default: 5)\n\
+	  --randomize       Randomize scan range start to reduce duplicates\n\
       --coinbase-addr=ADDR  payout address for solo mining\n\
       --coinbase-sig=TEXT  data to insert in the coinbase when possible\n\
       --no-longpoll     disable long polling support\n\
@@ -242,6 +244,7 @@ static struct option const options[] = {
 	{ "quiet", 0, NULL, 'q' },
 	{ "retries", 1, NULL, 'r' },
 	{ "retry-pause", 1, NULL, 'R' },
+	{ "randomize", 0, NULL, 1024 },
 	{ "scantime", 1, NULL, 's' },
 #ifdef HAVE_SYSLOG_H
 	{ "syslog", 0, NULL, 'S' },
@@ -1194,6 +1197,8 @@ static void *miner_thread(void *userdata)
 			work_free(&work);
 			work_copy(&work, &g_work);
 			work.data[19] = 0xffffffffU / opt_n_threads * thr_id;
+			if (opt_randomize)
+				work.data[19] += ((rand()*4) & UINT32_MAX) / opt_n_threads;
 		} else
 			work.data[19]++;
 		pthread_mutex_unlock(&g_work_lock);
@@ -1773,6 +1778,9 @@ static void parse_arg(int key, char *arg, char *pname)
 			show_usage_and_exit(1);
 		}
 		strcpy(coinbase_sig, arg);
+		break;
+	case 1024:
+		opt_randomize = true;
 		break;
 	case 'S':
 		use_syslog = true;
