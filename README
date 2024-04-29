@@ -73,15 +73,14 @@ dedicated to this program,
 
 ########## WSL debug ###########
 
-sudo apt install build-essential gdb
-sudo apt install automake autoconf pkg-config libcurl4-openssl-dev libjansson-dev libssl-dev libgmp-dev zlib1g-dev make g++
+sudo apt install automake autoconf pkg-config libcurl4 libcurl4-openssl-dev libjansson-dev libssl-dev libgmp-dev zlib1g-dev make g++ libtool gdb build-essential
 
 git clone https://github.com/wragnini/cpuminer.git
 
 cd cpuminer
 
 ./autogen.sh
-./configure CFLAGS="-O3"
+./configure CFLAGS="-g -O3"
 
 code .
 

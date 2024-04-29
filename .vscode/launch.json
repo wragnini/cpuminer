@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/minerd",
-            "args": ["--algo", "sha256d", "-o", "stratum+tcp://192.168.1.83:3333", "-u", "bc1qn4s0zxttjp8qu32nu0g3mglux0v55fjzjt35xj.miner1", "-p", "x", "-t", "1"],
+            "args": ["--algo", "sha256d", "-o", "stratum+tcp://192.168.1.83:3333", "-u", "bc1qn4s0zxttjp8qu32nu0g3mglux0v55fjzjt35xj.debug", "-p", "x", "-t", "1"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
