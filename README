@@ -69,3 +69,26 @@ and all_proxy environment variables.
 Also many issues and FAQs are covered in the forum thread
 dedicated to this program,
 	https://bitcointalk.org/index.php?topic=55038.0
+
+
+########## WSL debug ###########
+
+sudo apt install build-essential gdb
+sudo apt install automake autoconf pkg-config libcurl4-openssl-dev libjansson-dev libssl-dev libgmp-dev zlib1g-dev make g++
+
+git clone https://github.com/wragnini/cpuminer.git
+
+cd cpuminer
+
+./autogen.sh
+./configure CFLAGS="-O3"
+
+code .
+
+recommended plugins:
+
+	wsl
+	remote development
+	c/c++ e extension pack
+	Makefile tools
+	Cmake e tools
